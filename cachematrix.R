@@ -31,11 +31,14 @@ cacheSolve <- function(x, ...) {
   }
   data <- x$get()
   
-  if (det(data) == 0) {
-    message("La matriz no tiene inversa!")
-  } else {
-    m <- solve(data, ...)
-    x$setsolve(m)
-    m
+  rows <- nrow(data)
+  cols <- ncol(data)
+  
+  if (rows == cols) { # square matrix
+    if (det(data) != 0) { # invertible matrix
+      m <- solve(data, ...)
+      x$setsolve(m)
+      m  
+    }
   }
 }
